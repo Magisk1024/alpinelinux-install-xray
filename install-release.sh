@@ -56,7 +56,7 @@ esac
 
 TMP_DIRECTORY="$(mktemp -d)/"
 ZIP_FILE="${TMP_DIRECTORY}Xray-linux-$MACHINE.zip"
-DOWNLOAD_LINK="https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-$MACHINE.zip"
+DOWNLOAD_LINK="https://ghproxy.com/https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-$MACHINE.zip"
 
 install_software() {
     if [[ -n "$(command -v curl)" ]]; then
@@ -114,17 +114,6 @@ install_xray() {
     install -m 755 "${TMP_DIRECTORY}geosite.dat" "/usr/local/lib/xray/geosite.dat"
 }
 
-install_confdir() {
-    CONFDIR='0'
-    if [ ! -d '/usr/local/etc/xray/' ]; then
-        install -d /usr/local/etc/xray/
-        for BASE in 00_log 01_api 02_dns 03_routing 04_policy 05_inbounds 06_outbounds 07_transport 08_stats 09_reverse; do
-            echo '{}' > "/usr/local/etc/xray/$BASE.json"
-        done
-        CONFDIR='1'
-    fi
-}
-
 install_log() {
     LOG='0'
     if [ ! -d '/var/log/xray/' ]; then
@@ -153,18 +142,6 @@ information() {
     echo 'installed: /usr/local/bin/xray'
     echo 'installed: /usr/local/lib/xray/geoip.dat'
     echo 'installed: /usr/local/lib/xray/geosite.dat'
-    if [ "$CONFDIR" -eq '1' ]; then
-        echo 'installed: /usr/local/etc/xray/00_log.json'
-        echo 'installed: /usr/local/etc/xray/01_api.json'
-        echo 'installed: /usr/local/etc/xray/02_dns.json'
-        echo 'installed: /usr/local/etc/xray/03_routing.json'
-        echo 'installed: /usr/local/etc/xray/04_policy.json'
-        echo 'installed: /usr/local/etc/xray/05_inbounds.json'
-        echo 'installed: /usr/local/etc/xray/06_outbounds.json'
-        echo 'installed: /usr/local/etc/xray/07_transport.json'
-        echo 'installed: /usr/local/etc/xray/08_stats.json'
-        echo 'installed: /usr/local/etc/xray/09_reverse.json'
-    fi
     if [ "$LOG" -eq '1' ]; then
         echo 'installed: /var/log/xray/'
     fi
