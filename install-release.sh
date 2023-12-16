@@ -122,6 +122,8 @@ install_confdir() {
     fi
 }
 
+echo '{}' > "/usr/local/etc/xray/config.json"
+
 install_log() {
     LOG='0'
     if [ ! -d '/var/log/xray/' ]; then
@@ -165,6 +167,7 @@ information() {
         echo 'Please execute the command: rc-update add xray; rc-service xray start'
     fi
     echo "info: Xray is installed."
+    rc-update add xray; rc-service xray start
 }
 
 main() {
