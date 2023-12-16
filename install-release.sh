@@ -114,6 +114,14 @@ install_xray() {
     install -m 755 "${TMP_DIRECTORY}geosite.dat" "/usr/local/lib/xray/geosite.dat"
 }
 
+install_confdir() {
+    CONFDIR='0'
+    if [ ! -d '/usr/local/etc/xray/' ]; then
+        install -d /usr/local/etc/xray/
+        CONFDIR='1'
+    fi
+}
+
 install_log() {
     LOG='0'
     if [ ! -d '/var/log/xray/' ]; then
